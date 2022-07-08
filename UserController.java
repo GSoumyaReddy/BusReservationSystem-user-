@@ -12,24 +12,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.dto.UserDto;
 import com.cg.entity.User;
 import com.cg.service.IUserService;
 
 @RestController
+
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
 	public IUserService userService;
 	
-	@RequestMapping("/user")
 	
 	@PostMapping
-	public User addUser(@RequestBody User user) {
-		return userService.addUser(user);
+	public User addUser(@RequestBody UserDto userdto) {
+		return userService.addUser(userdto);
 	}
 	
 	@PutMapping("/{userId}/{username}")
-	public User updateUser(@PathVariable("userId")int userId,@PathVariable("name")String name) {
+	public UserDto updateUser(@PathVariable("userId")int userId,@PathVariable("username")String name) {
      return userService.updateUser(userId,name);
 	}
 	
@@ -39,13 +41,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/{userid}")
-	public User viewUser(@PathVariable("id")int userLoginId) {
-		return userService.viewUser(userLoginId);
+	public User viewUser(@PathVariable("userid")int userLoginId) {
+		return userService.viewUser(userLoginId );
 	}
 	
-	@GetMapping
-	public List<User>viewAllUsers(){
-		return userService.viewAllUsers();
+	@GetMapping("/viewAll")
+	public List<UserDto> viewAllUsers(){
+		return  userService.viewAllUsers();
 	}
 	
 	
