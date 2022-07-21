@@ -1,14 +1,34 @@
 package com.cg.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class User {
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int userLoginId;
+	@Column
 	private String userName;
+	@Column
 	private String password;
+	@Column
 	private String firstName;
+	@Column
 	private String lastName;
+	@Column
 	private long contact;
+	@Column
 	private String email;
+	
+	@OneToOne(cascade = CascadeType.ALL)
 	private Reservation reservation;
 	
 	public User() {}
@@ -93,9 +113,10 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [userLoginId=" + userLoginId + ", userName=" + userName + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", contact=" + contact + ", email=" + email + "]";
+				+ firstName + ", lastName=" + lastName + ", contact=" + contact + ", email=" + email + " ,reservation"+reservation+"]";
 	}
-	
+
+		
 	
 
 }
