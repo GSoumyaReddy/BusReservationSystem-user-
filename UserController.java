@@ -9,48 +9,76 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.dto.UserDto;
-import com.cg.entity.User;
-import com.cg.service.IUserService;
+import com.cg.entity.Bus;
+import com.cg.entity.FeedBack;
+import com.cg.entity.Reservation;
+import com.cg.entity.Route;
+import com.cg.service.IBusService;
+import com.cg.service.IFeedBackService;
+import com.cg.service.ReservationService;
+import com.cg.service.RouteService;
 
 @RestController
-
-@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
-	public IUserService userService;
+	private IBusService iBusService;
 	
+	@Autowired
+	private IFeedBackService iFeedBackService;
+
+	@Autowired
+	private RouteService routeService;
 	
-	@PostMapping
-	public User addUser(@RequestBody UserDto userdto) {
-		return userService.addUser(userdto);
+	@Autowired
+	private ReservationService reservationService;
+	
+	@PostMapping("/addFeedBack")
+	
+	public FeedBack addFeedBack(@RequestBody FeedBack feedback) {
+		return iFeedBackService.addFeedBack(feedback);
+	}
+
+    @PutMapping("/updateFeedBack/{feedbackId}/{overallRating}")
+ 
+    public FeedBack updateFeedBack(@PathVariable ("feedbackId") int feedbackId, @PathVariable("overallRating") int overallRating) {
+	 return iFeedBackService.updateFeedBack(feedbackId,overallRating);
+   }
+ 
+    @GetMapping("/viewFeedBack/{feedbackId}")
+    public FeedBack viewFeedBack(@PathVariable ("feedbackId") int feedbackId ) {
+ 
+	return iFeedBackService.viewFeedBack(feedbackId);
+   }
+
+     
+    @PostMapping("/addReservation/{reservation}")
+	public Reservation addReservation(@RequestBody Reservation reservation) {
+		return reservationService.addReservation(reservation);
 	}
 	
-	@PutMapping("/{userId}/{username}")
-	public UserDto updateUser(@PathVariable("userId")int userId,@PathVariable("username")String name) {
-     return userService.updateUser(userId,name);
+	@PutMapping("/updateReservation/{reservationId}/{reservationType}")
+	public Reservation updateReservation(@PathVariable ("reservationId") int reservationId,@PathVariable("reservationType") String reservationType) {
+		return  reservationService.updateReservation(reservationId, reservationType);
 	}
 	
-	@DeleteMapping("/{userLoginId}")
-	public User deleteUser(@PathVariable("userLoginId")int userLoginId) {
-		return userService.deleteUser(userLoginId);
+	@DeleteMapping("/deleteReservation/{reservationId}")
+	public Reservation deleteReservation(@PathVariable ("reservationId") int reservationId) {
+		return  reservationService.deleteReservation(reservationId);
 	}
 	
-	@GetMapping("/{userid}")
-	public UserDto viewUser(@PathVariable("userid")int userLoginId) {
-		return userService.viewUser(userLoginId );
-	}
-	
-	@GetMapping("/viewAll")
-	public List<UserDto> viewAllUsers(){
-		return  userService.viewAllUsers();
+	@GetMapping("/viewReservation/{reservationId}")
+	public Reservation viewReservation(@PathVariable("reservationId") int reservationId) {
+		return  reservationService.viewReservation(reservationId);
 	}
 	
 	
      
+     
+     
 
-}
+     
+
+ }
